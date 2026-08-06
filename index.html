@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carnicería La Asunta - Calidad en cada corte</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- CSS propio -->
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-drumstick-bite"></i>
+                <span>La Asunta</span>
+            </div>
+            <nav>
+                <a href="#nosotros">Nosotros</a>
+                <a href="#ofertas" class="btn-whatsapp-nav">
+                    <i class="fab fa-whatsapp"></i> Ofertas
+                </a>
+                <a href="/admin/" class="btn-admin-link" style="display:none;">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="inicio">
+        <div class="container hero-grid">
+            <div class="hero-text">
+                <span class="badge">🍖 Cortes frescos diarios</span>
+                <h1>La mejor carne <br /><span>de La Asunta</span></h1>
+                <p>Más de 20 años seleccionando los mejores cortes para tu mesa. Calidad, frescura y tradición en cada bocado.</p>
+                <div class="hero-buttons">
+                    <a href="#ofertas" class="btn-primary">
+                        <i class="fab fa-whatsapp"></i> Unirme a ofertas
+                    </a>
+                    <a href="#nosotros" class="btn-secondary">Conocer más</a>
+                </div>
+                <div class="hero-stats">
+                    <div><span>20+</span> años</div>
+                    <div><span>500+</span> clientes</div>
+                    <div><span>100%</span> fresco</div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82c?w=600&auto=format" alt="Cortes de carne" loading="lazy" />
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== BENEFICIOS ========== -->
+    <section class="beneficios" id="beneficios">
+        <div class="container">
+            <h2>¿Por qué elegirnos?</h2>
+            <div class="beneficios-grid">
+                <div class="beneficio-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Frescura garantizada</h3>
+                    <p>Cortes diarios, nunca congelados.</p>
+                </div>
+                <div class="beneficio-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Trato personalizado</h3>
+                    <p>Te asesoramos en cada compra.</p>
+                </div>
+                <div class="beneficio-card">
+                    <i class="fas fa-tag"></i>
+                    <h3>Precios justos</h3>
+                    <p>Calidad al mejor precio del mercado.</p>
+                </div>
+                <div class="beneficio-card">
+                    <i class="fas fa-truck"></i>
+                    <h3>Envíos a domicilio</h3>
+                    <p>Llevamos tu pedido a casa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== NOSOTROS (Gerente) ========== -->
+    <section class="nosotros" id="nosotros">
+        <div class="container nosotros-grid">
+            <div class="nosotros-img">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format" alt="Gerente - Carnicería La Asunta" loading="lazy" />
+            </div>
+            <div class="nosotros-text">
+                <span class="badge">Sobre nosotros</span>
+                <h2>Don Carlos <br /><span>El alma de La Asunta</span></h2>
+                <p>
+                    Don Carlos, fundador y gerente, comenzó con un pequeño puesto en el mercado local.
+                    Hoy, con más de 20 años de experiencia, su pasión por la carne de calidad y el trato
+                    cercano hacen de <strong>Carnicería La Asunta</strong> un lugar de confianza para
+                    toda la comunidad.
+                </p>
+                <div class="gerente-frase">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"La mejor carne es la que se sirve con cariño."</p>
+                </div>
+                <div class="gerente-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== OFERTAS DINÁMICAS ========== -->
+    <section class="ofertas-semanales" id="ofertas">
+        <div class="container">
+            <h2>🔥 Ofertas de la semana</h2>
+            <div id="contenedorOfertas" class="ofertas-grid">
+                <!-- Las ofertas se cargan desde Netlify CMS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA FINAL (WhatsApp) ========== -->
+    <section class="cta-final" id="cta-whatsapp">
+        <div class="container">
+            <div class="cta-content">
+                <i class="fab fa-whatsapp cta-icon"></i>
+                <h2>¡No te pierdas las ofertas semanales!</h2>
+                <p>Únete a nuestro grupo de WhatsApp y recibe cada semana descuentos exclusivos, promociones y cortes especiales.</p>
+                <a href="https://chat.whatsapp.com/TU_ENLACE_AQUI" target="_blank" class="btn-cta-whatsapp">
+                    <i class="fab fa-whatsapp"></i> Unirme ahora
+                </a>
+                <span class="cta-seguro">🔒 Solo ofertas, sin spam</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span>La Asunta</span>
+                    <p>Calidad en cada corte desde 2004</p>
+                </div>
+                <div class="footer-contacto">
+                    <p><i class="fas fa-map-pin"></i> Av. Principal #123, La Asunta</p>
+                    <p><i class="fas fa-phone"></i> +591 7XX-XXXXX</p>
+                    <p><i class="fas fa-clock"></i> Lun-Sáb 7:00am - 8:00pm</p>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Carnicería La Asunta - Hecho con ❤️ para nuestra comunidad</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

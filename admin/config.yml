@@ -1,0 +1,83 @@
+# ============================================
+# CONFIGURACIÓN DE NETLIFY CMS
+# Carnicería La Asunta
+# ============================================
+
+backend:
+  name: git-gateway
+  branch: main
+
+# Carpeta donde se guardarán las imágenes subidas
+media_folder: "img/ofertas"
+public_folder: "/img/ofertas"
+
+# Configuración de la interfaz
+locale: 'es'
+
+# ============================================
+# COLECCIONES (Tipos de contenido)
+# ============================================
+
+collections:
+  - name: "ofertas"
+    label: "Ofertas Semanales"
+    folder: "_data/ofertas"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - label: "Título de la oferta"
+        name: "titulo"
+        widget: "string"
+        required: true
+        hint: "Ej: Lomo Fino Especial"
+
+      - label: "Descripción"
+        name: "descripcion"
+        widget: "text"
+        required: true
+        hint: "Describe la oferta en pocas palabras"
+        default: "Corte premium de primera calidad"
+
+      - label: "Precio"
+        name: "precio"
+        widget: "string"
+        required: false
+        hint: "Ej: Bs. 89/kg o 'Consultar'"
+        default: "Consultar"
+
+      - label: "Imagen de la oferta"
+        name: "imagen"
+        widget: "image"
+        required: false
+        hint: "Sube una foto de la oferta (recomendado 800x600)"
+        media_library:
+          config:
+            multiple: false
+
+      - label: "¿Oferta activa?"
+        name: "activa"
+        widget: "boolean"
+        default: true
+        hint: "Desactiva para ocultar la oferta sin borrarla"
+
+      - label: "Fecha de publicación"
+        name: "fecha"
+        widget: "date"
+        default: ""
+        format: "DD/MM/YYYY"
+        hint: "Fecha en que inicia la oferta"
+
+      - label: "Etiqueta especial"
+        name: "etiqueta"
+        widget: "select"
+        options:
+          - label: "Ninguna"
+            value: ""
+          - label: "🔥 Oferta del día"
+            value: "oferta-dia"
+          - label: "⭐ Más vendido"
+            value: "mas-vendido"
+          - label: "💎 Edición limitada"
+            value: "edicion-limitada"
+        default: ""
+        hint: "Destaca tu oferta con una etiqueta especial"

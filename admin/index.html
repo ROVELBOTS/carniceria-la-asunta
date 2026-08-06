@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Carnicería La Asunta</title>
+    <!-- Carga Netlify CMS -->
+    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    <style>
+        /* Estilo profesional para la página de login */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #FDF5E6 0%, #F5E6D3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-container {
+            max-width: 420px;
+            width: 100%;
+        }
+        .login-box {
+            background: white;
+            padding: 48px 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+        .icono-carniceria {
+            font-size: 4rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+        .badge-admin {
+            display: inline-block;
+            background: #C0392B;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .login-box h1 {
+            font-size: 1.8rem;
+            color: #2C3E50;
+            margin-bottom: 4px;
+        }
+        .login-box .subtitle {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+        .login-box .features {
+            text-align: left;
+            background: #F8F9FA;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        .login-box .features li {
+            list-style: none;
+            padding: 4px 0;
+        }
+        .login-box .features li:before {
+            content: "✅ ";
+        }
+        .btn-github {
+            display: inline-block;
+            background: #24292E;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn-github:hover {
+            background: #2C3E50;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .btn-github i {
+            margin-right: 10px;
+        }
+        .footer-admin {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+        }
+        .footer-admin a {
+            color: #C0392B;
+            text-decoration: none;
+        }
+        @media (max-width: 480px) {
+            .login-box {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <span class="icono-carniceria">🥩</span>
+            <span class="badge-admin">🔐 Panel de Administración</span>
+            <h1>Carnicería La Asunta</h1>
+            <p class="subtitle">Gestiona las ofertas semanales</p>
+            
+            <div class="features">
+                <li>📝 Crear y editar ofertas</li>
+                <li>🖼️ Subir imágenes fácilmente</li>
+                <li>📅 Programar publicaciones</li>
+                <li>🔒 Acceso seguro con GitHub</li>
+            </div>
+
+            <!-- Botón que inicia el flujo de Netlify CMS -->
+            <button class="btn-github" onclick="iniciarCMS()">
+                <i class="fab fa-github"></i> Iniciar sesión con GitHub
+            </button>
+
+            <div class="footer-admin">
+                <p>🔐 Autenticación segura • Solo para administradores</p>
+                <p style="margin-top:4px;">
+                    <a href="/">← Volver a la página principal</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función que inicia Netlify CMS
+        function iniciarCMS() {
+            window.location.href = '/admin/#/collections/ofertas';
+        }
+
+        // Si ya está autenticado, redirigir directamente
+        if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+            window.location.href = '/admin/#/collections/ofertas';
+        }
+
+        // Cargar Font Awesome para los íconos
+        const fontAwesome = document.createElement('link');
+        fontAwesome.rel = 'stylesheet';
+        fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css';
+        document.head.appendChild(fontAwesome);
+    </script>
+</body>
+</html>
