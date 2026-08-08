@@ -70,25 +70,28 @@ a {
 }
 
 .btn-primary {
-    background: var(--color-primary);
-    color: var(--color-white);
+    background: #25D366; /* Color verde de WhatsApp */
+    color: #ffffff;
     padding: 14px 32px;
     border-radius: 50px;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     transition: all 0.3s ease;
     border: none;
     cursor: pointer;
     font-family: 'Quicksand', sans-serif;
-    box-shadow: 0 4px 15px var(--color-shadow);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    white-space: nowrap;
+    min-width: 140px;
 }
 
 .btn-primary:hover {
-    background: var(--color-primary-dark);
+    background: #1DA851;
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
 }
 
 .btn-secondary {
@@ -613,7 +616,10 @@ nav a:hover {
     }
     
     .hero-buttons {
-        justify-content: center;
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-bottom: 32px;
     }
     
     .hero-stats {
@@ -714,5 +720,48 @@ nav a:hover {
     .logo-nosotros {
         max-width: 250px;
         padding: 15px;
+    }
+}
+
+/* ============================================
+   RESPONSIVE - PANTALLAS PEQUEÑAS
+   ============================================ */
+
+@media (max-width: 576px) {
+    /* Botones en móvil */
+    .hero-buttons {
+        flex-direction: column; /* Apilar verticalmente */
+        align-items: stretch; /* Ocupar todo el ancho */
+        gap: 12px;
+        width: 100%;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%; /* Ocupar todo el ancho */
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 1rem;
+        white-space: nowrap; /* Mantener texto en una línea */
+        min-width: unset; /* Eliminar el mínimo */
+    }
+
+    /* Ajuste adicional para el botón "Conocer más" */
+    .btn-secondary {
+        padding: 14px 20px;
+    }
+}
+
+/* Para tablets (entre 577px y 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .hero-buttons {
+        gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+        min-width: 120px;
     }
 }
