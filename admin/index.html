@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Carnicería La Asunta</title>
-    <!-- Carga Netlify CMS -->
-    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+        <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
     <style>
         body {
             background: #FDF8F0;
@@ -48,44 +47,96 @@
     <script>
         console.log('🥩 Panel de Administración - Carnicería La Asunta');
 
-        // Ocultar carga cuando el CMS esté listo
-        const observer = new MutationObserver(function() {
-            if (document.querySelector('#nc-root')) {
-                const loading = document.getElementById('cargando');
-                if (loading) loading.style.display = 'none';
-                observer.disconnect();
+        function ocultarCarga() {
+            const loading = document.getElementById('cargando');
+            if (loading) {
+                loading.style.display = 'none';
                 console.log('✅ CMS cargado correctamente');
+            }
+        }
+
+        const observer = new MutationObserver(function(mutations) {
+        
+            const ncRoot = document.querySelector('#nc-root');
+            if (ncRoot) {
+                ocultarCarga();
+                observer.disconnect();
+                return;
+            }
+
+        
+            const collections = document.querySelector('.nc-collection-list');
+            if (collections) {
+                ocultarCarga();
+                observer.disconnect();
+                return;
             }
         });
 
+        
         observer.observe(document.body, { childList: true, subtree: true });
 
-        // Timeout de seguridad
-        setTimeout(() => {
-            const loading = document.getElementById('cargando');
-            if (loading && loading.style.display !== 'none') {
-                loading.innerHTML = `
-                    <div class="icono">⚠️</div>
-                    <h2 class="error">Error al cargar</h2>
-                    <p>No se pudo inicializar el CMS.</p>
-                    <p style="font-size:0.85rem;color:#666;">
-                        Verifica tu conexión a Internet y que Git Gateway esté activo.
-                    </p>
-                    <button onclick="location.reload()" style="
-                        background:#C0392B;
-                        color:white;
-                        border:none;
-                        padding:10px 24px;
-                        border-radius:8px;
-                        cursor:pointer;
-                        margin-top:12px;
-                        font-weight:600;
-                    ">
-                        Recargar
-                    </button>
-                `;
+        
+        
+        const timeoutId = setTimeout(() => {
+            
+            if (document.querySelector('#nc-root') || document.querySelector('.nc-collection-list')) {
+                ocultarCarga();
+                observer.disconnect();
+                return;
             }
-        }, 15000);
+
+            
+            console.warn('⚠️ El CMS no se detectó automáticamente. Reintentando...');
+            
+            
+            const oldScript = document.querySelector('script[src*="netlify-cms"]');
+            if (oldScript) {
+                oldScript.remove();
+            }
+
+            
+            const newScript = document.createElement('script');
+            newScript.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
+            newScript.onload = function() {
+                console.log('✅ Script de CMS recargado. Esperando inicialización...');
+            
+                setTimeout(() => {
+                    if (document.querySelector('#nc-root')) {
+                        ocultarCarga();
+                        observer.disconnect();
+                    }
+                }, 3000);
+            };
+            document.head.appendChild(newScript);
+
+            
+            setTimeout(() => {
+                const loading = document.getElementById('cargando');
+                if (loading && loading.style.display !== 'none') {
+                    loading.innerHTML = `
+                        <div class="icono">⚠️</div>
+                        <h2 class="error">Error al cargar</h2>
+                        <p>No se pudo inicializar el CMS.</p>
+                        <p style="font-size:0.85rem;color:#666;">
+                            Verifica tu conexión a Internet y que Git Gateway esté activo.
+                        </p>
+                        <button onclick="location.reload()" style="
+                            background:#C0392B;
+                            color:white;
+                            border:none;
+                            padding:10px 24px;
+                            border-radius:8px;
+                            cursor:pointer;
+                            margin-top:12px;
+                            font-weight:600;
+                        ">
+                            Recargar
+                        </button>
+                    `;
+                }
+            }, 10000);
+        }, 5000); 
     </script>
 </body>
 </html>
