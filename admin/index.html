@@ -4,9 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Carnicería La Asunta</title>
-    
     <!-- ============================================
-         ESTILOS PARA LA PANTALLA DE CARGA
+         ESTILOS PARA LA PANTALLA DE CARGA Y LOGIN
          ============================================ -->
     <style>
         body {
@@ -18,9 +17,15 @@
             margin: 0;
             font-family: 'Inter', -apple-system, sans-serif;
         }
-        .cargando {
+        .cargando, .login-box {
             text-align: center;
             padding: 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
         }
         .spinner {
             width: 40px;
@@ -36,103 +41,147 @@
             100% { transform: rotate(360deg); }
         }
         .icono { font-size: 3rem; }
-        .error { color: #C0392B; }
-        
-        /* ============================================
-           ESTILO PARA EL CONTENEDOR DEL CMS
-           ============================================ */
-        #nc-root {
+        .btn-github {
+            background: #24292E;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 16px;
             width: 100%;
-            min-height: 100vh;
-            background: #FDF8F0;
+        }
+        .btn-github:hover {
+            background: #2C3E50;
+        }
+        .btn-github i {
+            margin-right: 8px;
         }
     </style>
 </head>
 <body>
     <!-- ============================================
-         CONTENEDOR DONDE SE RENDERIZARÁ EL CMS
+         CONTENEDOR PARA EL CMS
          ============================================ -->
     <div id="nc-root"></div>
 
     <!-- ============================================
          PANTALLA DE CARGA (se oculta automáticamente)
          ============================================ -->
-    <div id="cargando" class="cargando" style="
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        ">
+    <div id="cargando" class="cargando">
         <div class="icono">🥩</div>
         <div class="spinner"></div>
         <h2>Cargando panel...</h2>
-        <p>Conectando con el CMS</p>
+        <p>Inicializando CMS...</p>
     </div>
 
     <!-- ============================================
-         CARGA DE NETLIFY CMS
+         SCRIPTS: Identity Widget + Netlify CMS
          ============================================ -->
+    <!-- 1. Cargar el Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <!-- 2. Cargar el CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
 
     <script>
         console.log('🥩 Panel de Administración - Carnicería La Asunta');
 
         // ============================================
-        // FUNCIÓN PARA OCULTAR LA PANTALLA DE CARGA
+        // 1. INICIALIZAR IDENTITY WIDGET
+        // ============================================
+        window.netlifyIdentity = window.netlifyIdentity || {};
+        window.netlifyIdentity.init();
+
+        // ============================================
+        // 2. ESCUCHAR EVENTOS DE AUTENTICACIÓN
+        // ============================================
+        window.netlifyIdentity.on('login', function(user) {
+            console.log('✅ Usuario autenticado:', user.email);
+            // Recargar la página para que el CMS detecte la sesión
+            window.location.reload();
+        });
+
+        window.netlifyIdentity.on('logout', function() {
+            console.log('👋 Usuario desconectado');
+        });
+
+        // ============================================
+        // 3. MANEJAR EL ESTADO DE AUTENTICACIÓN
+        // ============================================
+        const user = window.netlifyIdentity.currentUser();
+        if (user) {
+            console.log('👤 Sesión activa:', user.email);
+        }
+
+        // ============================================
+        // 4. Ocultar carga y mostrar el botón si es necesario
         // ============================================
         function ocultarCarga() {
             const loading = document.getElementById('cargando');
             if (loading) {
-                loading.style.opacity = '0';
-                loading.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    loading.style.display = 'none';
-                }, 500);
-                console.log('✅ CMS cargado correctamente');
+                loading.style.display = 'none';
+                console.log('✅ Panel listo');
             }
         }
 
-        // ============================================
-        // OBSERVAR EL DOM PARA DETECTAR QUE EL CMS SE RENDERIZÓ
-        // ============================================
-        const observer = new MutationObserver(function() {
-            // Buscar el contenedor principal del CMS (se llena cuando el CMS renderiza)
-            const ncRoot = document.querySelector('#nc-root');
-            if (ncRoot && ncRoot.children.length > 0) {
+        // Observar el DOM para saber cuándo el CMS está listo
+        const observer = new MutationObserver(() => {
+            if (document.querySelector('#nc-root') && document.querySelector('#nc-root').children.length > 0) {
                 ocultarCarga();
                 observer.disconnect();
-                return;
-            }
-
-            // También buscar el menú de colecciones (otra señal)
-            const collections = document.querySelector('.nc-collection-list');
-            if (collections) {
-                ocultarCarga();
-                observer.disconnect();
-                return;
             }
         });
-
-        // Iniciar la observación
         observer.observe(document.body, { childList: true, subtree: true });
 
         // ============================================
-        // MECANISMO DE REINTENTO (FALLBACK)
+        // 5. MOSTRAR BOTÓN DE LOGIN SI ES NECESARIO
         // ============================================
-        // Si después de 8 segundos no se detecta el CMS, mostrar error
+        // Si después de 5 segundos no hay usuario autenticado
+        // y el CMS no se ha cargado, mostrar el botón de login
+        setTimeout(() => {
+            const user = window.netlifyIdentity.currentUser();
+            const ncRoot = document.querySelector('#nc-root');
+            const loading = document.getElementById('cargando');
+
+            if (!user && (!ncRoot || ncRoot.children.length === 0)) {
+                // El usuario no está autenticado
+                if (loading) {
+                    loading.innerHTML = `
+                        <div class="icono">🔐</div>
+                        <h2>Iniciar sesión</h2>
+                        <p>Accede con tu cuenta de GitHub para gestionar las ofertas.</p>
+                        <button class="btn-github" onclick="window.netlifyIdentity.open()">
+                            <i class="fab fa-github"></i> Iniciar sesión con GitHub
+                        </button>
+                        <p style="margin-top:16px; font-size:0.8rem; color:#888;">
+                            Solo para administradores invitados.
+                        </p>
+                    `;
+                    // Agregar el ícono de Font Awesome para el botón
+                    const fontAwesome = document.createElement('link');
+                    fontAwesome.rel = 'stylesheet';
+                    fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css';
+                    document.head.appendChild(fontAwesome);
+                }
+                console.log('🔑 Mostrando botón de login');
+            } else {
+                ocultarCarga();
+            }
+        }, 5000);
+
+        // ============================================
+        // 6. TIMEOUT DE SEGURIDAD
+        // ============================================
         setTimeout(() => {
             const loading = document.getElementById('cargando');
             if (loading && loading.style.display !== 'none') {
                 loading.innerHTML = `
                     <div class="icono">⚠️</div>
-                    <h2 class="error">Error al cargar</h2>
-                    <p>No se pudo inicializar el CMS.</p>
-                    <p style="font-size:0.85rem;color:#666; margin-top: 8px;">
+                    <h2 class="error" style="color:#C0392B;">Error al cargar</h2>
+                    <p>No se pudo inicializar el panel.</p>
+                    <p style="font-size:0.85rem;color:#666;">
                         Verifica tu conexión a Internet y que Git Gateway esté activo.
                     </p>
                     <button onclick="location.reload()" style="
@@ -149,7 +198,7 @@
                     </button>
                 `;
             }
-        }, 8000);
+        }, 15000);
     </script>
 </body>
 </html>
