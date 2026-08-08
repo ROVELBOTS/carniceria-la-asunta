@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Carnicería La Asunta</title>
+    <!-- Carga Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
     <style>
         body {
@@ -34,19 +35,6 @@
         }
         .icono { font-size: 3rem; }
         .error { color: #C0392B; }
-        .btn-recargar {
-            background: #C0392B;
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 12px;
-            font-weight: 600;
-        }
-        .btn-recargar:hover {
-            background: #8B1A1A;
-        }
     </style>
 </head>
 <body>
@@ -59,60 +47,43 @@
 
     <script>
         console.log('🥩 Panel de Administración - Carnicería La Asunta');
-        console.log('📝 Usando git-gateway con autenticación simplificada');
 
-        function ocultarCarga() {
-            const loading = document.getElementById('cargando');
-            if (loading) {
-                loading.style.display = 'none';
+        // Ocultar carga cuando el CMS esté listo
+        const observer = new MutationObserver(function() {
+            if (document.querySelector('#nc-root')) {
+                const loading = document.getElementById('cargando');
+                if (loading) loading.style.display = 'none';
+                observer.disconnect();
                 console.log('✅ CMS cargado correctamente');
-            }
-        }
-
-        function mostrarError(mensaje) {
-            const loading = document.getElementById('cargando');
-            if (loading) {
-                loading.innerHTML = `
-                    <div class="icono">⚠️</div>
-                    <h2 class="error">Error al cargar</h2>
-                    <p>${mensaje}</p>
-                    <button class="btn-recargar" onclick="location.reload()">
-                        Recargar
-                    </button>
-                `;
-            }
-        }
-
-
-        const observer = new MutationObserver(function(mutations) {
-
-            const ncRoot = document.querySelector('#nc-root');
-            if (ncRoot) {
-                ocultarCarga();
-                observer.disconnect();
-                return;
-            }
-
-
-            const collections = document.querySelector('.nc-collection-list');
-            if (collections) {
-                ocultarCarga();
-                observer.disconnect();
-                return;
             }
         });
 
         observer.observe(document.body, { childList: true, subtree: true });
 
-
-        const timeoutId = setTimeout(() => {
-            observer.disconnect();
+        // Timeout de seguridad
+        setTimeout(() => {
             const loading = document.getElementById('cargando');
             if (loading && loading.style.display !== 'none') {
-                mostrarError(
-                    'No se pudo cargar el CMS. Verifica tu conexión a Internet ' +
-                    'y asegúrate de que las configuraciones sean correctas.'
-                );
+                loading.innerHTML = `
+                    <div class="icono">⚠️</div>
+                    <h2 class="error">Error al cargar</h2>
+                    <p>No se pudo inicializar el CMS.</p>
+                    <p style="font-size:0.85rem;color:#666;">
+                        Verifica tu conexión a Internet y que Git Gateway esté activo.
+                    </p>
+                    <button onclick="location.reload()" style="
+                        background:#C0392B;
+                        color:white;
+                        border:none;
+                        padding:10px 24px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        margin-top:12px;
+                        font-weight:600;
+                    ">
+                        Recargar
+                    </button>
+                `;
             }
         }, 15000);
     </script>
