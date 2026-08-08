@@ -1,4 +1,24 @@
-/* ===== RESET Y BASE ===== */
+/* ============================================
+   IMPORTAR FUENTES DE GOOGLE
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* ============================================
+   RESET Y VARIABLES (PALETA DE COLORES)
+   ============================================ */
+:root {
+    /* Colores principales del logo */
+    --color-primary: #8B2635;      /* Rojo terroso - Principal */
+    --color-primary-dark: #6B1D29; /* Rojo más oscuro para hover */
+    --color-secondary: #F5E6D3;    /* Beige cálido - Fondos */
+    --color-accent: #D4A352;       /* Ocre/Dorado - Acentos */
+    --color-accent-light: #E8C88A; /* Ocre más claro */
+    --color-white: #FDFBF7;        /* Blanco roto - Contraste */
+    --color-dark: #2C3E50;         /* Gris oscuro - Textos */
+    --color-text: #3D3D3D;         /* Gris suave para párrafos */
+    --color-shadow: rgba(139, 38, 53, 0.15); /* Sombra con el color principal */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,9 +31,9 @@ html {
 
 body {
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    color: #2C3E50;
-    background: #FDF5E6;
+    line-height: 1.7;
+    color: var(--color-text);
+    background-color: var(--color-white);
 }
 
 .container {
@@ -25,7 +45,7 @@ body {
 img {
     max-width: 100%;
     display: block;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 a {
@@ -33,22 +53,67 @@ a {
     color: inherit;
 }
 
+/* ============================================
+   COMPONENTES GLOBALES
+   ============================================ */
 .badge {
     display: inline-block;
-    background: #C0392B;
-    color: #fff;
-    padding: 6px 18px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 6px 20px;
     border-radius: 50px;
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     margin-bottom: 16px;
+    font-family: 'Quicksand', sans-serif;
 }
 
-/* ===== HEADER ===== */
+.btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-family: 'Quicksand', sans-serif;
+    box-shadow: 0 4px 15px var(--color-shadow);
+}
+
+.btn-primary:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(139, 38, 53, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 2px solid var(--color-primary);
+    transition: all 0.3s ease;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.btn-secondary:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
 .header {
-    background: #fff;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    background: rgba(253, 251, 247, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     padding: 16px 0;
     position: sticky;
     top: 0;
@@ -62,13 +127,16 @@ a {
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #C0392B;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-primary);
 }
 
 .logo i {
+    color: var(--color-accent);
     margin-right: 8px;
+    font-size: 1.8rem;
 }
 
 nav {
@@ -80,38 +148,35 @@ nav {
 nav a {
     font-weight: 600;
     font-size: 0.95rem;
+    color: var(--color-dark);
     transition: color 0.2s;
+    font-family: 'Quicksand', sans-serif;
 }
 
 nav a:hover {
-    color: #C0392B;
+    color: var(--color-primary);
 }
 
 .btn-whatsapp-nav {
     background: #25D366;
     color: #fff !important;
-    padding: 8px 18px;
+    padding: 8px 20px;
     border-radius: 50px;
     font-weight: 600;
-    transition: background 0.2s;
+    transition: all 0.2s;
 }
 
 .btn-whatsapp-nav:hover {
     background: #1DA851 !important;
+    transform: scale(1.05);
 }
 
-.btn-admin-link {
-    background: #2C3E50;
-    color: #fff !important;
-    padding: 8px 14px;
-    border-radius: 50px;
-    font-size: 0.85rem;
-}
-
-/* ===== HERO ===== */
+/* ============================================
+   HERO
+   ============================================ */
 .hero {
     padding: 60px 0 80px;
-    background: linear-gradient(135deg, #FDF5E6 0%, #F5E6D3 100%);
+    background: linear-gradient(135deg, var(--color-secondary) 0%, #FFF8F0 100%);
 }
 
 .hero-grid {
@@ -122,14 +187,16 @@ nav a:hover {
 }
 
 .hero-text h1 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 3.2rem;
-    font-weight: 800;
-    line-height: 1.1;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-dark);
     margin-bottom: 16px;
 }
 
 .hero-text h1 span {
-    color: #C0392B;
+    color: var(--color-primary);
 }
 
 .hero-text p {
@@ -139,79 +206,47 @@ nav a:hover {
     max-width: 500px;
 }
 
-.hero-buttons {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-}
-
-.btn-primary {
-    background: #25D366;
-    color: #fff;
-    padding: 14px 32px;
-    border-radius: 50px;
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-primary:hover {
-    transform: scale(1.03);
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-}
-
-.btn-secondary {
-    background: transparent;
-    color: #2C3E50;
-    padding: 14px 28px;
-    border-radius: 50px;
-    font-weight: 600;
-    border: 2px solid #2C3E50;
-    transition: all 0.2s;
-}
-
-.btn-secondary:hover {
-    background: #2C3E50;
-    color: #fff;
-}
-
 .hero-stats {
     display: flex;
     gap: 40px;
+    margin-top: 32px;
 }
 
 .hero-stats div {
+    font-family: 'Quicksand', sans-serif;
     font-weight: 600;
-    color: #555;
+    color: var(--color-text);
 }
 
 .hero-stats span {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #C0392B;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-primary);
     display: block;
 }
 
 .hero-image img {
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px var(--color-shadow);
     height: 450px;
     object-fit: cover;
     width: 100%;
 }
 
-/* ===== BENEFICIOS ===== */
+/* ============================================
+   BENEFICIOS
+   ============================================ */
 .beneficios {
     padding: 70px 0;
-    background: #fff;
+    background: var(--color-white);
     text-align: center;
 }
 
 .beneficios h2 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
     margin-bottom: 40px;
 }
 
@@ -223,31 +258,42 @@ nav a:hover {
 
 .beneficio-card {
     padding: 30px 20px;
-    background: #FDF5E6;
-    border-radius: 16px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--color-secondary);
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    border-bottom: 4px solid transparent;
 }
 
 .beneficio-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border-bottom-color: var(--color-primary);
 }
 
 .beneficio-card i {
-    font-size: 2.5rem;
-    color: #C0392B;
+    font-size: 2.8rem;
+    color: var(--color-primary);
     margin-bottom: 16px;
 }
 
 .beneficio-card h3 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-dark);
     margin-bottom: 8px;
 }
 
-/* ===== NOSOTROS ===== */
+.beneficio-card p {
+    color: var(--color-text);
+}
+
+/* ============================================
+   NOSOTROS (GERENTE)
+   ============================================ */
 .nosotros {
     padding: 80px 0;
-    background: #FDF5E6;
+    background: var(--color-secondary);
 }
 
 .nosotros-grid {
@@ -258,40 +304,44 @@ nav a:hover {
 }
 
 .nosotros-img img {
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px var(--color-shadow);
     height: 450px;
     object-fit: cover;
     width: 100%;
 }
 
 .nosotros-text h2 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
     line-height: 1.2;
     margin-bottom: 16px;
 }
 
 .nosotros-text h2 span {
-    color: #C0392B;
+    color: var(--color-primary);
 }
 
 .nosotros-text p {
-    color: #555;
+    color: var(--color-text);
     margin-bottom: 20px;
     font-size: 1.05rem;
 }
 
 .gerente-frase {
-    background: #fff;
+    background: var(--color-white);
     padding: 20px 24px;
-    border-radius: 12px;
-    border-left: 5px solid #C0392B;
+    border-radius: 16px;
+    border-left: 5px solid var(--color-accent);
     margin: 20px 0;
     font-style: italic;
+    color: var(--color-dark);
 }
 
 .gerente-frase i {
-    color: #C0392B;
+    color: var(--color-primary);
     font-size: 1.2rem;
     margin-right: 8px;
 }
@@ -303,30 +353,36 @@ nav a:hover {
 }
 
 .gerente-social a {
-    background: #2C3E50;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-white);
     width: 44px;
     height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
 }
 
 .gerente-social a:hover {
-    background: #C0392B;
+    background: var(--color-primary-dark);
+    transform: translateY(-3px);
 }
 
-/* ===== OFERTAS DINÁMICAS ===== */
+/* ============================================
+   OFERTAS
+   ============================================ */
 .ofertas-semanales {
     padding: 70px 0;
-    background: #fff;
+    background: var(--color-white);
     text-align: center;
 }
 
 .ofertas-semanales h2 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
     margin-bottom: 40px;
 }
 
@@ -337,19 +393,19 @@ nav a:hover {
 }
 
 .oferta-card {
-    background: #FDF5E6;
-    border-radius: 16px;
+    background: var(--color-secondary);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
     border: 2px solid transparent;
     text-align: left;
 }
 
 .oferta-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 10px 35px rgba(192, 57, 43, 0.15);
-    border-color: #C0392B;
+    box-shadow: 0 10px 35px var(--color-shadow);
+    border-color: var(--color-accent);
 }
 
 .oferta-card img {
@@ -359,52 +415,52 @@ nav a:hover {
 }
 
 .oferta-card .badge-oferta {
-    background: #C0392B;
-    color: #fff;
+    background: var(--color-primary);
+    color: var(--color-white);
     padding: 4px 14px;
     border-radius: 50px;
     font-size: 0.75rem;
     font-weight: 700;
     display: inline-block;
     margin: 12px 0 0 16px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .oferta-card h3 {
-    padding: 8px 16px 4px;
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    padding: 8px 16px 4px;
 }
 
 .oferta-card .precio-oferta {
-    color: #C0392B;
-    font-weight: 800;
+    color: var(--color-primary);
+    font-weight: 700;
     font-size: 1.2rem;
     padding: 0 16px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .oferta-card p {
     padding: 4px 16px 12px;
-    color: #666;
+    color: var(--color-text);
 }
 
 .oferta-card .fecha-oferta {
-    font-size: 0.75rem;
-    color: #999;
+    font-size: 0.8rem;
+    color: #888;
     padding: 0 16px 16px;
 }
 
-.oferta-vacia {
-    grid-column: 1 / -1;
-    padding: 40px;
-    color: #999;
-    font-size: 1.1rem;
-}
-
-/* ===== CTA FINAL ===== */
+/* ============================================
+   CTA FINAL
+   ============================================ */
 .cta-final {
     padding: 80px 20px;
-    background: linear-gradient(135deg, #C0392B 0%, #8E1F1A 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     text-align: center;
-    color: #fff;
+    color: var(--color-white);
 }
 
 .cta-content {
@@ -415,10 +471,13 @@ nav a:hover {
 .cta-icon {
     font-size: 4rem;
     margin-bottom: 16px;
+    color: #25D366;
 }
 
 .cta-content h2 {
+    font-family: 'Quicksand', sans-serif;
     font-size: 2.8rem;
+    font-weight: 700;
     margin-bottom: 16px;
 }
 
@@ -433,17 +492,18 @@ nav a:hover {
     align-items: center;
     gap: 12px;
     background: #25D366;
-    color: #fff;
+    color: var(--color-white);
     padding: 18px 48px;
     border-radius: 50px;
     font-size: 1.3rem;
     font-weight: 700;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
+    font-family: 'Quicksand', sans-serif;
 }
 
 .btn-cta-whatsapp:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 40px rgba(37, 211, 102, 0.5);
+    box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
 }
 
 .cta-seguro {
@@ -453,9 +513,11 @@ nav a:hover {
     font-size: 0.9rem;
 }
 
-/* ===== FOOTER ===== */
+/* ============================================
+   FOOTER
+   ============================================ */
 .footer {
-    background: #1A252F;
+    background: var(--color-dark);
     color: #ccc;
     padding: 50px 0 20px;
 }
@@ -468,13 +530,19 @@ nav a:hover {
 }
 
 .footer-logo {
+    font-family: 'Quicksand', sans-serif;
     font-size: 1.5rem;
-    font-weight: 800;
-    color: #C0392B;
+    font-weight: 700;
+    color: var(--color-accent);
 }
 
 .footer-logo span {
-    color: #fff;
+    color: var(--color-white);
+}
+
+.footer-logo i {
+    color: var(--color-accent);
+    margin-right: 8px;
 }
 
 .footer-logo p {
@@ -482,6 +550,7 @@ nav a:hover {
     font-size: 0.95rem;
     color: #aaa;
     margin-top: 6px;
+    font-family: 'Inter', sans-serif;
 }
 
 .footer-contacto p {
@@ -491,7 +560,7 @@ nav a:hover {
 
 .footer-contacto i {
     width: 24px;
-    color: #C0392B;
+    color: var(--color-accent);
 }
 
 .footer-social {
@@ -500,45 +569,66 @@ nav a:hover {
 }
 
 .footer-social a {
-    background: #2C3E50;
-    color: #fff;
+    background: rgba(255,255,255,0.1);
+    color: var(--color-white);
     width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
 }
 
 .footer-social a:hover {
-    background: #C0392B;
+    background: var(--color-primary);
+    transform: translateY(-3px);
 }
 
 .footer-bottom {
-    border-top: 1px solid #2C3E50;
+    border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 20px;
     text-align: center;
     font-size: 0.85rem;
     color: #888;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 992px) {
     .hero-grid,
     .nosotros-grid {
         grid-template-columns: 1fr;
+        text-align: center;
     }
+    
     .hero-text h1 {
         font-size: 2.5rem;
     }
+    
+    .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
     .beneficios-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
     }
+    
     .footer-social {
         justify-content: center;
     }
@@ -548,24 +638,81 @@ nav a:hover {
     .hero-text h1 {
         font-size: 2rem;
     }
+    
     .beneficios-grid {
         grid-template-columns: 1fr;
     }
-    nav a:not(.btn-whatsapp-nav):not(.btn-admin-link) {
-        display: none;
-    }
+    
     .hero-stats {
         flex-wrap: wrap;
         gap: 20px;
     }
+    
     .cta-content h2 {
         font-size: 2rem;
     }
+    
     .btn-cta-whatsapp {
         padding: 14px 28px;
         font-size: 1rem;
     }
+    
     .ofertas-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .hero-image img,
+    .nosotros-img img {
+        height: 250px;
+    }
+}
+
+/* ============================================
+   ESTILOS PARA EL LOGO
+   ============================================ */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 100px;         /* Ajusta según el tamaño de tu logo */
+    width: auto;
+    display: block;
+}
+
+.logo span {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+/* ============================================
+   ESTILOS PARA EL LOGO EN SECCIÓN NOSOTROS
+   ============================================ */
+.logo-nosotros {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--color-white);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px var(--color-shadow);
+    transition: transform 0.3s ease;
+}
+
+.logo-nosotros:hover {
+    transform: scale(1.02);
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .logo-nosotros {
+        max-width: 250px;
+        padding: 15px;
     }
 }

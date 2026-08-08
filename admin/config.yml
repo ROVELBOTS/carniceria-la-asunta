@@ -1,22 +1,12 @@
-# ============================================
-# CONFIGURACIÓN DE NETLIFY CMS
-# Carnicería La Asunta
-# ============================================
-
 backend:
   name: git-gateway
   branch: main
 
-# Carpeta donde se guardarán las imágenes subidas
 media_folder: "img/ofertas"
 public_folder: "/img/ofertas"
 
-# Configuración de la interfaz
-locale: 'es'
 
-# ============================================
-# COLECCIONES (Tipos de contenido)
-# ============================================
+locale: 'es'
 
 collections:
   - name: "ofertas"

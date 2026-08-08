@@ -1,4 +1,3 @@
-// ===== Smooth scroll para navegación =====
 document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -15,20 +14,17 @@ document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== CARGAR OFERTAS DESDE NETLIFY CMS =====
 async function cargarOfertas() {
     const contenedor = document.getElementById('contenedorOfertas');
     if (!contenedor) return;
 
     try {
-        // Intentar cargar ofertas desde Netlify CMS
         const response = await fetch('/_data/ofertas/index.json');
         if (!response.ok) throw new Error('No hay ofertas aún');
         
         const ofertas = await response.json();
         
         if (ofertas && ofertas.length > 0) {
-            // Mostrar solo las últimas 6 ofertas activas
             const ofertasActivas = ofertas
                 .filter(o => o.activa !== false)
                 .slice(-6)
@@ -53,7 +49,7 @@ function mostrarOfertas(contenedor, ofertas) {
     contenedor.innerHTML = ofertas.map(o => `
         <div class="oferta-card">
             ${o.imagen ? `<img src="${o.imagen}" alt="${o.titulo}" loading="lazy" />` : ''}
-            <span class="badge-oferta">🔥 OFERTA</span>
+            <span class="badge-oferta">OFERTA</span>
             <h3>${o.titulo || 'Oferta especial'}</h3>
             ${o.precio ? `<div class="precio-oferta">${o.precio}</div>` : ''}
             <p>${o.descripcion || ''}</p>
@@ -90,9 +86,8 @@ function mostrarOfertasDefault(contenedor) {
     mostrarOfertas(contenedor, ofertasDefault);
 }
 
-// ===== MOSTRAR BOTÓN ADMIN PARA USUARIOS AUTENTICADOS =====
 function verificarAdmin() {
-    // Si el usuario está logueado en Netlify, mostrar botón admin
+
     if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
         const adminLink = document.querySelector('.btn-admin-link');
         if (adminLink) {
@@ -101,16 +96,26 @@ function verificarAdmin() {
     }
 }
 
-// ===== INICIALIZAR =====
+
 document.addEventListener('DOMContentLoaded', () => {
     cargarOfertas();
     
-    // Verificar si hay usuario admin (solo si Netlify Identity está cargado)
+
     setTimeout(verificarAdmin, 1000);
 });
 
-// Recargar ofertas cada 60 segundos (por si se actualizan)
+
 setInterval(cargarOfertas, 60000);
+
+function actualizarAnio() {
+    const yearElement = document.getElementById('year');
+    if (yearElement) {
+        const fechaActual = new Date();
+        yearElement.textContent = fechaActual.getFullYear();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', actualizarAnio);
 
 console.log('🐄 Carnicería La Asunta - Landing Page Profesional');
 console.log('📝 Gestiona ofertas en /admin/');
