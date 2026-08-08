@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin - Carnicería La Asunta</title>
-        <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    
+    <!-- ============================================
+         ESTILOS PARA LA PANTALLA DE CARGA
+         ============================================ -->
     <style>
         body {
             background: #FDF8F0;
@@ -34,37 +37,79 @@
         }
         .icono { font-size: 3rem; }
         .error { color: #C0392B; }
+        
+        /* ============================================
+           ESTILO PARA EL CONTENEDOR DEL CMS
+           ============================================ */
+        #nc-root {
+            width: 100%;
+            min-height: 100vh;
+            background: #FDF8F0;
+        }
     </style>
 </head>
 <body>
-    <div id="cargando" class="cargando">
+    <!-- ============================================
+         CONTENEDOR DONDE SE RENDERIZARÁ EL CMS
+         ============================================ -->
+    <div id="nc-root"></div>
+
+    <!-- ============================================
+         PANTALLA DE CARGA (se oculta automáticamente)
+         ============================================ -->
+    <div id="cargando" class="cargando" style="
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        ">
         <div class="icono">🥩</div>
         <div class="spinner"></div>
         <h2>Cargando panel...</h2>
         <p>Conectando con el CMS</p>
     </div>
 
+    <!-- ============================================
+         CARGA DE NETLIFY CMS
+         ============================================ -->
+    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+
     <script>
         console.log('🥩 Panel de Administración - Carnicería La Asunta');
 
+        // ============================================
+        // FUNCIÓN PARA OCULTAR LA PANTALLA DE CARGA
+        // ============================================
         function ocultarCarga() {
             const loading = document.getElementById('cargando');
             if (loading) {
-                loading.style.display = 'none';
+                loading.style.opacity = '0';
+                loading.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 500);
                 console.log('✅ CMS cargado correctamente');
             }
         }
 
-        const observer = new MutationObserver(function(mutations) {
-        
+        // ============================================
+        // OBSERVAR EL DOM PARA DETECTAR QUE EL CMS SE RENDERIZÓ
+        // ============================================
+        const observer = new MutationObserver(function() {
+            // Buscar el contenedor principal del CMS (se llena cuando el CMS renderiza)
             const ncRoot = document.querySelector('#nc-root');
-            if (ncRoot) {
+            if (ncRoot && ncRoot.children.length > 0) {
                 ocultarCarga();
                 observer.disconnect();
                 return;
             }
 
-        
+            // También buscar el menú de colecciones (otra señal)
             const collections = document.querySelector('.nc-collection-list');
             if (collections) {
                 ocultarCarga();
@@ -73,70 +118,38 @@
             }
         });
 
-        
+        // Iniciar la observación
         observer.observe(document.body, { childList: true, subtree: true });
 
-        
-        
-        const timeoutId = setTimeout(() => {
-            
-            if (document.querySelector('#nc-root') || document.querySelector('.nc-collection-list')) {
-                ocultarCarga();
-                observer.disconnect();
-                return;
+        // ============================================
+        // MECANISMO DE REINTENTO (FALLBACK)
+        // ============================================
+        // Si después de 8 segundos no se detecta el CMS, mostrar error
+        setTimeout(() => {
+            const loading = document.getElementById('cargando');
+            if (loading && loading.style.display !== 'none') {
+                loading.innerHTML = `
+                    <div class="icono">⚠️</div>
+                    <h2 class="error">Error al cargar</h2>
+                    <p>No se pudo inicializar el CMS.</p>
+                    <p style="font-size:0.85rem;color:#666; margin-top: 8px;">
+                        Verifica tu conexión a Internet y que Git Gateway esté activo.
+                    </p>
+                    <button onclick="location.reload()" style="
+                        background:#C0392B;
+                        color:white;
+                        border:none;
+                        padding:10px 24px;
+                        border-radius:8px;
+                        cursor:pointer;
+                        margin-top:12px;
+                        font-weight:600;
+                    ">
+                        Recargar
+                    </button>
+                `;
             }
-
-            
-            console.warn('⚠️ El CMS no se detectó automáticamente. Reintentando...');
-            
-            
-            const oldScript = document.querySelector('script[src*="netlify-cms"]');
-            if (oldScript) {
-                oldScript.remove();
-            }
-
-            
-            const newScript = document.createElement('script');
-            newScript.src = 'https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js';
-            newScript.onload = function() {
-                console.log('✅ Script de CMS recargado. Esperando inicialización...');
-            
-                setTimeout(() => {
-                    if (document.querySelector('#nc-root')) {
-                        ocultarCarga();
-                        observer.disconnect();
-                    }
-                }, 3000);
-            };
-            document.head.appendChild(newScript);
-
-            
-            setTimeout(() => {
-                const loading = document.getElementById('cargando');
-                if (loading && loading.style.display !== 'none') {
-                    loading.innerHTML = `
-                        <div class="icono">⚠️</div>
-                        <h2 class="error">Error al cargar</h2>
-                        <p>No se pudo inicializar el CMS.</p>
-                        <p style="font-size:0.85rem;color:#666;">
-                            Verifica tu conexión a Internet y que Git Gateway esté activo.
-                        </p>
-                        <button onclick="location.reload()" style="
-                            background:#C0392B;
-                            color:white;
-                            border:none;
-                            padding:10px 24px;
-                            border-radius:8px;
-                            cursor:pointer;
-                            margin-top:12px;
-                            font-weight:600;
-                        ">
-                            Recargar
-                        </button>
-                    `;
-                }
-            }, 10000);
-        }, 5000); 
+        }, 8000);
     </script>
 </body>
 </html>
